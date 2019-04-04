@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "jshint --show-non-errors --exclude ./node_modules .",
+    "test": "npm run lint && mocha test --recursive",
+    "debug": "npm run lint && cross-env DEBUG=fligth-scrappper,momondo-scrappper,persistency-module npm start",
+    "start": "node index.js",
+    "startKDS": "node indexKDS.js",
+    "api": "node src/api/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MRAproject/Backend.git"
+  },
+  "author": "amit markovich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MRAproject/Backend/issues"
+  },
+  "homepage": "https://github.com/MRAproject/Backend#readme",
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "express": "^4.16.4",
+    "sqlite3": "^4.0.6"
+  }
+}
