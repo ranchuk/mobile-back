@@ -25,15 +25,15 @@ class DBM {
   }
 
   // USER TABLE
-  async createUserTable() {
+  async createUsersTable() {
     const sql =
-      "CREATE TABLE Users (username TEXT PRIMARY KEY, password TEXT, firstName TEXT, lastName TEXT, capacity INTEGER)";
+      "CREATE TABLE Users (username TEXT PRIMARY KEY, password TEXT, firstName TEXT, lastName TEXT,phoneNumber TEXT)";
     return await this._run(sql);
   }
 
   async insertUser(params) {
     const sql =
-      "INSERT INTO Users (username,password,firstName,lastName,capacity) VALUES (?,?,?,?,?)";
+      "INSERT INTO Users (username,password,firstName,lastName,phoneNumber) VALUES (?,?,?,?,?)";
     return await this._run(sql, params);
   }
 
@@ -43,68 +43,42 @@ class DBM {
   }
 
   async updateUser(params) {
-    const sql = `UPDATE Users SET password = ?, firstName = ?, lastName = ?, capacity = ? WHERE username = ?`;
+    const sql = `UPDATE Users SET password = ?, firstName = ?, lastName = ?, phoneNumber = ? WHERE username = ?`;
     return await this._run(sql, params);
   }
 
   // CARS TABLE
-  async createCarsTable() {
+  async createProductsTable() {
     const sql =
-      "CREATE TABLE Cars (username TEXT , carNumber TEXT, isInside INTEGER, PRIMARY KEY(username,carNumber))";
+      "CREATE TABLE Products (productId INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT , title TEXT, category TEXT, description TEXT)";
     return await this._run(sql);
   }
 
-  async insertCar(params) {
-    const sql = "INSERT INTO Cars (username,carNumber,isInside) VALUES (?,?,?)";
+  async insertProduct(params) {
+    const sql =
+      "INSERT INTO Products (username,title,category,description) VALUES (?,?,?,?)";
     return await this._run(sql, params);
   }
 
-  async removeCar(params) {
-    const sql = "DELETE FROM Cars WHERE username = ? AND carNumber= ?";
+  async removeProduct(params) {
+    const sql = "DELETE FROM Products WHERE productId=?";
     return await this._run(sql, params);
   }
 
-  async updateCarInside(params) {
-    const sql = `UPDATE Cars SET isInside = ? WHERE carNumber = ? AND username = ?`;
+  async updateProduct(params) {
+    const sql = `UPDATE Products SET title = ?, category=?, description=? WHERE productId = ?`;
     return await this._run(sql, params);
   }
 
-  async checkCar(params) {
-    const sql = "SELECT * FROM Cars WHERE carNumber = ?";
+  // async checkCar(params) {
+  //   const sql = "SELECT * FROM Cars WHERE carNumber = ?";
+  //   return await this._all(sql, params);
+  // }
+
+  async getAllUserProducts(params) {
+    const sql = `SELECT * FROM Products WHERE username = ?`;
     return await this._all(sql, params);
   }
-
-  async getAllUserCars(params) {
-    const sql = `SELECT * FROM Cars WHERE username = ?`;
-    return await this._all(sql, params);
-  }
-
-  // TIME TIMES
-  async createTimesTable() {
-    const sql ="CREATE TABLE Times (username TEXT, carNumber TEXT, enter TEXT, exit TEXT)";
-    return await this._run(sql);
-  }
-
-  async insertTimeRow(params) {
-    const sql ="INSERT INTO Times (username,carNumber,enter,exit) VALUES (?,?,?,?)";
-    return await this._run(sql, params);
-  }
-
-  async updateExitTime(params) {
-    const sql = `UPDATE Times SET exit = ? WHERE username = ? AND carNumber = ? AND enter = ?`;
-    return await this._run(sql, params);
-  }
-
-  async getCarNumberTimes(params) {
-    const sql = `SELECT * FROM Times WHERE carNumber = ? AND username = ? AND exit IS NULL`;
-    return await this._get(sql, params);
-  }
-
-  async getAllTimes(params) {
-    const sql = `SELECT * FROM Times WHERE username = ?`;
-    return await this._all(sql, params);
-  }
-
 
   // OTHERS
 
