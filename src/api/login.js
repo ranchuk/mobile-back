@@ -18,7 +18,7 @@ const login = async (req, res) => {
   }
   res.json({
     status: "authorized",
-    data: req.body
+    data: user
   });
 };
 

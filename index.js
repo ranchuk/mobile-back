@@ -7,7 +7,7 @@ const getAllUserProducts = require("./src/api/getAllUserProducts");
 // const update_car_status = require("./src/api/update_car_status");
 // const remove_car = require("./src/api/remove_car");
 // const check_car = require("./src/api/check_car");
-// const edit_user = require("./src/api/edit_user");
+const edit_user = require("./src/api/edit_user");
 // const get_all_times = require("./src/api/get_all_times");
 const DBM = require("./src/db/DBM");
 
@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 app.post("/login", login);
 app.post("/add_product", add_product);
 // app.post("/remove_car", remove_car);
-// app.post("/edit_user", edit_user);
+app.post("/edit_user", edit_user);
 // app.get("/check_car", check_car);
 app.get("/getAllUserProducts", getAllUserProducts);
 // app.get("/update_car_status", update_car_status);
