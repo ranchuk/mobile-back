@@ -79,6 +79,10 @@ class DBM {
     const sql = `SELECT * FROM Products WHERE username = ?`;
     return await this._all(sql, params);
   }
+  async getAllProducts() {
+    const sql = `SELECT * FROM Products`;
+    return await this._all(sql);
+  }
 
   // OTHERS
 

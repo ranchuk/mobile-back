@@ -4,6 +4,8 @@ const config = require("./src/shared/config");
 const login = require("./src/api/login");
 const add_product = require("./src/api/add_product");
 const getAllUserProducts = require("./src/api/getAllUserProducts");
+const getAllProducts = require("./src/api/getAllProducts");
+
 // const update_car_status = require("./src/api/update_car_status");
 // const remove_car = require("./src/api/remove_car");
 // const check_car = require("./src/api/check_car");
@@ -31,6 +33,8 @@ app.post("/add_product", add_product);
 app.post("/edit_user", edit_user);
 // app.get("/check_car", check_car);
 app.get("/getAllUserProducts", getAllUserProducts);
+app.get("/get_all_products", getAllProducts);
+
 // app.get("/update_car_status", update_car_status);
 // app.get("/get_all_times", get_all_times);
 
