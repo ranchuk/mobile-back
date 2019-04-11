@@ -1,6 +1,6 @@
 const DBM = require("../db/DBM");
 
-const add_cart = async (req, res) => {
+const remove_cart = async (req, res) => {
   if (!req.body || !req.body.username || !req.body.productId) {
     return res.status(403).json({
       status: "unauthorized"
@@ -10,19 +10,21 @@ const add_cart = async (req, res) => {
   const dbm = new DBM();
   await dbm.open();
   try {
-    await dbm.insertToCart([username, productId]);
+    await dbm.removeFromCart([username, productId]);
   } catch (e) {
-    return res.status(403).json({
-      status: "error insert"
+    return res.json({
+      message: "car number is alreday exist",
+      status: "failed"
     });
   } finally {
     await dbm.close();
   }
   res.json({
-    message: "product added",
+    message: "car deleted",
     status: "successful",
-    data: req.body
+    productId,
+    username
   });
 };
 
-module.exports = add_cart;
+module.exports = remove_cart;
