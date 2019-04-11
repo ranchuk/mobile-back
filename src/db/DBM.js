@@ -47,7 +47,8 @@ class DBM {
     return await this._run(sql, params);
   }
 
-  // CARS TABLE
+  //PRODUCTS TABLE
+
   async createProductsTable() {
     const sql =
       "CREATE TABLE Products (productId INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT , title TEXT, category TEXT, description TEXT)";
@@ -70,11 +71,6 @@ class DBM {
     return await this._run(sql, params);
   }
 
-  // async checkCar(params) {
-  //   const sql = "SELECT * FROM Cars WHERE carNumber = ?";
-  //   return await this._all(sql, params);
-  // }
-
   async getAllUserProducts(params) {
     const sql = `SELECT * FROM Products WHERE username = ?`;
     return await this._all(sql, params);
@@ -84,6 +80,29 @@ class DBM {
     return await this._all(sql);
   }
 
+  // CARTS TABLE
+
+  async createCartsTable() {
+    const sql =
+      "CREATE TABLE Carts (cartId INTEGER PRIMARY KEY AUTOINCREMENT,username TEXT, productId INTEGER)";
+    return await this._run(sql);
+  }
+
+  async insertToCart(params) {
+    const sql = "INSERT INTO Carts (username,productId) VALUES (?,?)";
+    return await this._run(sql, params);
+  }
+
+  async removeFromCart(params) {
+    const sql = "DELETE FROM Carts WHERE username=? AND productId=?";
+    return await this._run(sql, params);
+  }
+
+  async getFromCart(params) {
+    const sql = "select * FROM Carts WHERE username=?";
+    return await this._run(sql, params);
+  }
+
   // OTHERS
 
   async deleteTable(tableName) {
@@ -91,15 +110,15 @@ class DBM {
     return await this._run(sql);
   }
 
-  async updateEmailReminder(params) {
-    const sql = `UPDATE policyStatus SET date = ?, status = ? WHERE id = ?;`;
-    return await this._run(sql, params);
-  }
+  // async updateEmailReminder(params) {
+  //   const sql = `UPDATE policyStatus SET date = ?, status = ? WHERE id = ?;`;
+  //   return await this._run(sql, params);
+  // }
 
-  async getAllStatus() {
-    const sql = `SELECT * FROM policyStatus`;
-    return await this._all(sql);
-  }
+  // async getAllStatus() {
+  //   const sql = `SELECT * FROM policyStatus`;
+  //   return await this._all(sql);
+  // }
 
   _run(sql, params = []) {
     return new Promise((resolve, reject) => {

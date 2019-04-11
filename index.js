@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const config = require("./src/shared/config");
 const login = require("./src/api/login");
 const add_product = require("./src/api/add_product");
+const add_cart = require("./src/api/add_cart");
 const getAllUserProducts = require("./src/api/getAllUserProducts");
 const getAllProducts = require("./src/api/getAllProducts");
 
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 
 app.post("/login", login);
 app.post("/add_product", add_product);
+app.post("/add_cart", add_cart);
 // app.post("/remove_car", remove_car);
 app.post("/edit_user", edit_user);
 // app.get("/check_car", check_car);
@@ -52,6 +54,9 @@ async function resetTable() {
   // await dbm.createUsersTable();
   // await dbm.insertUser(["ranchuk", "123456", "ran", "gantz", "0509409038"]);
 
+  // await dbm.createCartsTable();
+  // await dbm.insertToCart(["ranchuk", 1]);
+
   // const carsList = await dbm.getAllUserCars(['amitmarko']);
   // console.log(carsList);
   // await dbm.createUserTable();
@@ -61,7 +66,7 @@ async function resetTable() {
   await dbm.close();
 }
 
-resetTable();
+// resetTable();
 
 app.listen(config.apiPort, () =>
   console.log(`The API is listening on port ${config.apiPort}!`)
