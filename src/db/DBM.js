@@ -62,7 +62,12 @@ class DBM {
   }
 
   async removeProduct(params) {
-    const sql = "DELETE FROM Products WHERE productId=?";
+    console.log(params);
+    const productId = params[1];
+    console.log(productId);
+    // const sql = `DELETE FROM Carts where productId=${productId}`;
+    // await this._run(sql);
+    const sql = "DELETE FROM Products WHERE username=? and productId=?";
     return await this._run(sql, params);
   }
 
@@ -76,8 +81,17 @@ class DBM {
     return await this._all(sql, params);
   }
   async getAllProducts() {
-    const sql = `SELECT * FROM Products`;
+    const sql = `SELECT * FROM Products inner join Users ON Users.username=Products.username`;
     return await this._all(sql);
+  }
+  async getCartProducts(username) {
+    const sql = `SELECT * FROM Carts inner join Products on Carts.productId=Products.ProductId
+    inner join Users ON Users.username=Products.username where Carts.username= '${username}'`;
+    return await this._all(sql);
+  }
+  async getCartProduct(params) {
+    const sql = `SELECT * FROM Carts where username = ? AND productId = ?`;
+    return await this._get(sql, params);
   }
 
   // CARTS TABLE
@@ -89,17 +103,15 @@ class DBM {
   }
 
   async insertToCart(params) {
-    const sql = "INSERT INTO Carts (username,productId) VALUES (?,?)";
-    return await this._run(sql, params);
+    const result = await this.getCartProduct(params);
+    if (!result) {
+      const sql = "INSERT INTO Carts (username,productId) VALUES (?,?)";
+      return await this._run(sql, params);
+    }
   }
 
   async removeFromCart(params) {
     const sql = "DELETE FROM Carts WHERE username=? AND productId=?";
-    return await this._run(sql, params);
-  }
-
-  async getFromCart(params) {
-    const sql = "select * FROM Carts WHERE username=?";
     return await this._run(sql, params);
   }
 
@@ -109,16 +121,6 @@ class DBM {
     const sql = `DROP TABLE  ${tableName}`;
     return await this._run(sql);
   }
-
-  // async updateEmailReminder(params) {
-  //   const sql = `UPDATE policyStatus SET date = ?, status = ? WHERE id = ?;`;
-  //   return await this._run(sql, params);
-  // }
-
-  // async getAllStatus() {
-  //   const sql = `SELECT * FROM policyStatus`;
-  //   return await this._all(sql);
-  // }
 
   _run(sql, params = []) {
     return new Promise((resolve, reject) => {

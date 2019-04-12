@@ -1,6 +1,6 @@
 const DBM = require("../db/DBM");
 
-const remove_cart = async (req, res) => {
+const remove_my_product = async (req, res) => {
   if (!req.body || !req.body.username || !req.body.productId) {
     return res.status(403).json({
       status: "unauthorized"
@@ -10,10 +10,10 @@ const remove_cart = async (req, res) => {
   const dbm = new DBM();
   await dbm.open();
   try {
-    await dbm.removeFromCart([username, productId]);
+    await dbm.removeProduct([username, productId]);
   } catch (e) {
     return res.json({
-      message: "error remove from cart",
+      message: "error remove from my products",
       status: "failed"
     });
   } finally {
@@ -27,4 +27,4 @@ const remove_cart = async (req, res) => {
   });
 };
 
-module.exports = remove_cart;
+module.exports = remove_my_product;
